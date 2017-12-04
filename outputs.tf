@@ -9,3 +9,7 @@ output "df_db_sg" {
 output "df_web_sg" {
   value = "${aws_security_group.df_web.id}"
 }
+
+output "data_feeds_cidr_block" {
+  value = "${var.data_feeds_cidr_block}"
+}
