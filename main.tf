@@ -67,9 +67,10 @@ resource "aws_security_group" "df_db" {
   }
 
   ingress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
+    from_port = 5432
+    to_port   = 5432
+    protocol  = "tcp"
+
     cidr_blocks = [
       "${var.data_pipe_apps_cidr_block}",
       "${var.opssubnet_cidr_block}",
