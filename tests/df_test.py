@@ -40,12 +40,6 @@ class TestE2E(unittest.TestCase):
     def test_name_prefix_data_feeds_subnet(self):
         self.assertEqual(self.result['data_feeds']["aws_subnet.data_feeds"]["tags.Name"], "dq-apps-data-feeds-subnet")
 
-    def test_name_prefix_df_postgres(self):
-        self.assertEqual(self.result['data_feeds']["aws_instance.df_postgres"]["tags.Name"], "dq-apps-data-feeds-postgres")
-
-    def test_name_prefix_df_web(self):
-        self.assertEqual(self.result['data_feeds']["aws_instance.df_web"]["tags.Name"], "dq-apps-data-feeds-web")
-
     def test_name_prefix_df_db(self):
         self.assertEqual(self.result['data_feeds']["aws_security_group.df_db"]["tags.Name"], "dq-apps-data-feeds-db-sg")
 
