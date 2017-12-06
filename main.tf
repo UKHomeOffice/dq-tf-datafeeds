@@ -5,7 +5,7 @@ locals {
 module "df_postgres" {
   source          = "github.com/UKHomeOffice/connectivity-tester-tf"
   subnet_id       = "${aws_subnet.data_feeds.id}"
-  user_data       = "LISTEN_tcp=0.0.0.0:5432 GROUP_web=${var.df_web_ip}:135"
+  user_data       = "LISTEN_tcp=0.0.0.0:5432"
   security_groups = ["${aws_security_group.df_db.id}"]
   private_ip      = "${var.df_postgres_ip}"
 }
@@ -24,7 +24,7 @@ resource "aws_subnet" "data_feeds" {
 module "df_web" {
   source          = "github.com/UKHomeOffice/connectivity-tester-tf"
   subnet_id       = "${aws_subnet.data_feeds.id}"
-  user_data       = "LISTEN_rpc=0.0.0.0:135 LISTEN_rdp=0.0.0.0:3389 GROUP_db=${var.df_postgres_ip}:5432"
+  user_data       = "LISTEN_rpc=0.0.0.0:135 LISTEN_rdp=0.0.0.0:3389 CHECK_db=${var.df_postgres_ip}:5432"
   security_groups = ["${aws_security_group.df_web.id}"]
   private_ip      = "${var.df_web_ip}"
 }
