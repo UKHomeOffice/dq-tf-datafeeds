@@ -21,6 +21,11 @@ resource "aws_subnet" "data_feeds" {
   }
 }
 
+resource "aws_route_table_association" "data_feeds_rt_association" {
+  subnet_id      = "${aws_subnet.data_feeds.id}"
+  route_table_id = "${var.route_table_id}"
+}
+
 module "df_web" {
   source          = "github.com/UKHomeOffice/connectivity-tester-tf"
   subnet_id       = "${aws_subnet.data_feeds.id}"
