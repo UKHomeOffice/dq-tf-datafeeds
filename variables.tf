@@ -4,7 +4,11 @@ variable "data_pipe_apps_cidr_block" {}
 variable "data_feeds_cidr_block" {}
 variable "az" {}
 variable "name_prefix" {}
-variable "route_table_id" {}
+
+variable "route_table_id" {
+  default     = false
+  description = "Value obtained from Apps module"
+}
 
 variable "df_postgres_ip" {
   description = "Mock IP address of database EC2 instance"
