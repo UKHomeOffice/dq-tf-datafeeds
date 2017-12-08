@@ -2,14 +2,6 @@ locals {
   name_prefix = "${var.name_prefix}apps-data-feeds-"
 }
 
-module "df_postgres" {
-  source          = "github.com/UKHomeOffice/connectivity-tester-tf"
-  subnet_id       = "${aws_subnet.data_feeds.id}"
-  user_data       = "LISTEN_tcp=0.0.0.0:5432"
-  security_groups = ["${aws_security_group.df_db.id}"]
-  private_ip      = "${var.df_postgres_ip}"
-}
-
 resource "aws_subnet" "data_feeds" {
   vpc_id                  = "${var.appsvpc_id}"
   cidr_block              = "${var.data_feeds_cidr_block}"
@@ -26,12 +18,34 @@ resource "aws_route_table_association" "data_feeds_rt_association" {
   route_table_id = "${var.route_table_id}"
 }
 
+module "df_postgres" {
+  source          = "github.com/UKHomeOffice/connectivity-tester-tf"
+  subnet_id       = "${aws_subnet.data_feeds.id}"
+  user_data       = "LISTEN_tcp=0.0.0.0:5432"
+  security_groups = ["${aws_security_group.df_db.id}"]
+  private_ip      = "${var.df_postgres_ip}"
+
+  tags = {
+    Name             = "ec2-${var.service}-postgresql-${var.environment}"
+    Service          = "${var.service}"
+    Environment      = "${var.environment}"
+    EnvironmentGroup = "${var.environment_group}"
+  }
+}
+
 module "df_web" {
   source          = "github.com/UKHomeOffice/connectivity-tester-tf"
   subnet_id       = "${aws_subnet.data_feeds.id}"
   user_data       = "LISTEN_rpc=0.0.0.0:135 LISTEN_rdp=0.0.0.0:3389 CHECK_db=${var.df_postgres_ip}:5432"
   security_groups = ["${aws_security_group.df_web.id}"]
   private_ip      = "${var.df_web_ip}"
+
+  tags = {
+    Name             = "ec2-${var.service}-python-${var.environment}"
+    Service          = "${var.service}"
+    Environment      = "${var.environment}"
+    EnvironmentGroup = "${var.environment_group}"
+  }
 }
 
 resource "aws_security_group" "df_db" {
