@@ -64,6 +64,7 @@ resource "aws_security_group" "df_db" {
       "${var.data_pipe_apps_cidr_block}",
       "${var.opssubnet_cidr_block}",
       "${var.data_feeds_cidr_block}",
+      "${var.peering_cidr_block}",
     ]
   }
 
@@ -92,6 +93,7 @@ resource "aws_security_group" "df_web" {
 
     cidr_blocks = [
       "${var.data_pipe_apps_cidr_block}",
+      "${var.peering_cidr_block}",
     ]
   }
 
@@ -102,6 +104,7 @@ resource "aws_security_group" "df_web" {
 
     cidr_blocks = [
       "${var.opssubnet_cidr_block}",
+      "${var.peering_cidr_block}",
     ]
   }
 
