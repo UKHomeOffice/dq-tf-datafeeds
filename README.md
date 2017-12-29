@@ -19,7 +19,7 @@ It consists of the following core elements:
 
 ### main.tf
 
-This file has most of the App modules along with basic VPC components:
+This file has the basic components for EC2 instances
 - Private subnet and route table association
 - Two EC2 instances using the connectivity tester module
 - Security group for the SQL and Web server
