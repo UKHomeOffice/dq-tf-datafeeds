@@ -61,3 +61,19 @@ To launch:
 terragrunt plan
 terragrunt apply
 ```
+
+## FAQs
+
+### The remote state isn't updating, what do I do?
+
+If the CI process appears to be stuck with a stale `tf state` then run the following command to force a refresh:
+
+```
+terragrunt refresh
+```
+If the CI process is still failing after a refresh look for errors about items no longer available in AWS - say something that was deleted manually via the AWS console or CLI.
+To explicitly delete the stale resource from TF state use the following command below. *Note:*```terragrunt state rm``` will not delete the resource from AWS it will unlink it from state only.
+
+```shell
+terragrunt state rm aws_resource_name
+```
