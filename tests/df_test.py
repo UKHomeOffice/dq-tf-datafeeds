@@ -27,7 +27,6 @@ class TestE2E(unittest.TestCase):
               data_pipe_apps_cidr_block   = "1.2.3.0/24"
               peering_cidr_block          = "1.1.1.0/24"
               az                          = "eu-west-2a"
-              name_prefix                 = "dq-"
               naming_suffix                = "apps-preprod-dq"
             }
         """
@@ -39,14 +38,14 @@ class TestE2E(unittest.TestCase):
     def test_data_feeds(self):
         self.assertEqual(self.result['data_feeds']["aws_subnet.data_feeds"]["cidr_block"], "10.1.4.0/24")
 
-    def test_name_prefix_data_feeds(self):
-        self.assertEqual(self.result['data_feeds']["aws_subnet.data_feeds"]["tags.Name"], "dq-apps-data-feeds-subnet")
+    def test_name_suffix_data_feeds(self):
+        self.assertEqual(self.result['data_feeds']["aws_subnet.data_feeds"]["tags.Name"], "subnet-datafeeds-apps-preprod-dq")
 
-    def test_name_prefix_df_db(self):
-        self.assertEqual(self.result['data_feeds']["aws_security_group.df_db"]["tags.Name"], "dq-apps-data-feeds-db-sg")
+    def test_name_suffix_df_db(self):
+        self.assertEqual(self.result['data_feeds']["aws_security_group.df_db"]["tags.Name"], "sg-db-datafeeds-apps-preprod-dq")
 
-    def test_name_prefix_df_web(self):
-        self.assertEqual(self.result['data_feeds']["aws_security_group.df_web"]["tags.Name"], "dq-apps-data-feeds-web-sg")
+    def test_name_suffix_df_web(self):
+        self.assertEqual(self.result['data_feeds']["aws_security_group.df_web"]["tags.Name"], "sg-web-datafeeds-apps-preprod-dq")
 
 
 
