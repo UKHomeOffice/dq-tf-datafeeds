@@ -6,6 +6,11 @@ variable "peering_cidr_block" {}
 variable "az" {}
 variable "name_prefix" {}
 
+variable "naming_suffix" {
+  default     = false
+  description = "Naming suffix for tags, value passed from dq-tf-apps"
+}
+
 variable "route_table_id" {
   default     = false
   description = "Value obtained from Apps module"

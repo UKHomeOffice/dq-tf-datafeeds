@@ -1,5 +1,5 @@
 locals {
-  name_prefix = "${var.name_prefix}apps-data-feeds-"
+  naming_suffix = "datafeeds-${var.naming_suffix}"
 }
 
 resource "aws_subnet" "data_feeds" {
