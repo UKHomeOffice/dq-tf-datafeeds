@@ -9,7 +9,7 @@ resource "aws_subnet" "data_feeds" {
   availability_zone       = "${var.az}"
 
   tags {
-    Name = "${local.name_prefix}subnet"
+    Name = "subnet-${local.naming_suffix}"
   }
 }
 
@@ -26,10 +26,7 @@ module "df_postgres" {
   private_ip      = "${var.df_postgres_ip}"
 
   tags = {
-    Name             = "ec2-${var.service}-postgresql-${var.environment}"
-    Service          = "${var.service}"
-    Environment      = "${var.environment}"
-    EnvironmentGroup = "${var.environment_group}"
+    Name = "postgresql-${local.naming_suffix}"
   }
 }
 
@@ -41,10 +38,7 @@ module "df_web" {
   private_ip      = "${var.df_web_ip}"
 
   tags = {
-    Name             = "ec2-${var.service}-python-${var.environment}"
-    Service          = "${var.service}"
-    Environment      = "${var.environment}"
-    EnvironmentGroup = "${var.environment_group}"
+    Name = "python-${local.naming_suffix}"
   }
 }
 
@@ -52,7 +46,7 @@ resource "aws_security_group" "df_db" {
   vpc_id = "${var.appsvpc_id}"
 
   tags {
-    Name = "${local.name_prefix}db-sg"
+    Name = "sg-db-${local.naming_suffix}"
   }
 
   ingress {
@@ -83,7 +77,7 @@ resource "aws_security_group" "df_web" {
   vpc_id = "${var.appsvpc_id}"
 
   tags {
-    Name = "${local.name_prefix}web-sg"
+    Name = "sg-web-${local.naming_suffix}"
   }
 
   ingress {
