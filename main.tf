@@ -18,58 +18,17 @@ resource "aws_route_table_association" "data_feeds_rt_association" {
   route_table_id = "${var.route_table_id}"
 }
 
-module "df_postgres" {
-  source          = "github.com/UKHomeOffice/connectivity-tester-tf"
-  subnet_id       = "${aws_subnet.data_feeds.id}"
-  user_data       = "LISTEN_tcp=0.0.0.0:5432"
-  security_groups = ["${aws_security_group.df_db.id}"]
-  private_ip      = "${var.df_postgres_ip}"
-
-  tags = {
-    Name = "postgresql-${local.naming_suffix}"
-  }
-}
-
-module "df_web" {
-  source          = "github.com/UKHomeOffice/connectivity-tester-tf"
-  subnet_id       = "${aws_subnet.data_feeds.id}"
-  user_data       = "LISTEN_rpc=0.0.0.0:135 LISTEN_rdp=0.0.0.0:3389 CHECK_db=${var.df_postgres_ip}:5432"
-  security_groups = ["${aws_security_group.df_web.id}"]
-  private_ip      = "${var.df_web_ip}"
+resource "aws_instance" "df_web" {
+  key_name                    = "${var.key_name}"
+  ami                         = "${data.aws_ami.df_web.id}"
+  instance_type               = "t2.xlarge"
+  vpc_security_group_ids      = ["${aws_security_group.df_web.id}"]
+  associate_public_ip_address = false
+  subnet_id                   = "${aws_subnet.data_feeds.id}"
+  private_ip                  = "${var.df_web_ip}"
 
   tags = {
     Name = "python-${local.naming_suffix}"
-  }
-}
-
-resource "aws_security_group" "df_db" {
-  vpc_id = "${var.appsvpc_id}"
-
-  tags {
-    Name = "sg-db-${local.naming_suffix}"
-  }
-
-  ingress {
-    from_port = 5432
-    to_port   = 5432
-    protocol  = "tcp"
-
-    cidr_blocks = [
-      "${var.data_pipe_apps_cidr_block}",
-      "${var.opssubnet_cidr_block}",
-      "${var.data_feeds_cidr_block}",
-      "${var.peering_cidr_block}",
-    ]
-  }
-
-  egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
-
-    cidr_blocks = [
-      "0.0.0.0/0",
-    ]
   }
 }
 
@@ -81,22 +40,12 @@ resource "aws_security_group" "df_web" {
   }
 
   ingress {
-    from_port = 135
-    to_port   = 135
+    from_port = 22
+    to_port   = 22
     protocol  = "tcp"
 
     cidr_blocks = [
       "${var.data_pipe_apps_cidr_block}",
-      "${var.peering_cidr_block}",
-    ]
-  }
-
-  ingress {
-    from_port = 3389
-    to_port   = 3389
-    protocol  = "tcp"
-
-    cidr_blocks = [
       "${var.opssubnet_cidr_block}",
       "${var.peering_cidr_block}",
     ]

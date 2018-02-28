@@ -14,10 +14,6 @@ output "data_feeds_cidr_block" {
   value = "${var.data_feeds_cidr_block}"
 }
 
-output "df_postgres_ip" {
-  value = "${var.df_postgres_ip}"
-}
-
 output "df_web_ip" {
   value = "${var.df_web_ip}"
 }
