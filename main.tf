@@ -35,7 +35,7 @@ if [ ! -f /bin/aws ]; then
     curl https://bootstrap.pypa.io/get-pip.py | python
     pip install awscli
 
-sudo -u wherescape sh -c "aws --region eu-west-2 ssm get-parameter --name ef_ssh_logon --query 'Parameter.Value' --output text --with-decryption | > ~/.ssh/authorized_keys"
+aws --region eu-west-2 ssm get-parameter --name ef_ssh_logon --query 'Parameter.Value' --output text --with-decryption > /home/wherescape/.ssh/authorized_keys
 
 EOF
 
