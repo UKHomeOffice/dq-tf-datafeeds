@@ -17,3 +17,7 @@ output "data_feeds_cidr_block" {
 output "df_web_ip" {
   value = "${var.df_web_ip}"
 }
+
+output "iam_roles" {
+  value = ["${aws_iam_role.data_feeds_linux_iam_role.id}"]
+}
