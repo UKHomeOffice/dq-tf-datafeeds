@@ -21,6 +21,7 @@ resource "aws_route_table_association" "data_feeds_rt_association" {
 resource "aws_instance" "df_web" {
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.df_web.id}"
+  iam_instance_profile        = "${aws_iam_instance_profile.data_feeds_linux.id}"
   instance_type               = "t2.xlarge"
   vpc_security_group_ids      = ["${aws_security_group.df_web.id}"]
   associate_public_ip_address = false
