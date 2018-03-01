@@ -27,6 +27,17 @@ resource "aws_instance" "df_web" {
   subnet_id                   = "${aws_subnet.data_feeds.id}"
   private_ip                  = "${var.df_web_ip}"
 
+  user_data = <<EOF
+#!/bin/bash
+
+if [ ! -f /bin/aws ]; then
+    curl https://bootstrap.pypa.io/get-pip.py | python
+    pip install awscli
+
+sudo -u wherescape sh -c "aws --region eu-west-2 ssm get-parameter --name ef_ssh_logon --query 'Parameter.Value' --output text --with-decryption | > ~/.ssh/authorized_keys"
+
+EOF
+
   tags = {
     Name = "python-${local.naming_suffix}"
   }
