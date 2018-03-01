@@ -34,6 +34,7 @@ resource "aws_instance" "df_web" {
 if [ ! -f /bin/aws ]; then
     curl https://bootstrap.pypa.io/get-pip.py | python
     pip install awscli
+fi
 
 aws --region eu-west-2 ssm get-parameter --name ef_ssh_logon --query 'Parameter.Value' --output text --with-decryption > /home/wherescape/.ssh/authorized_keys
 
