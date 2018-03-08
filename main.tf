@@ -27,6 +27,7 @@ resource "aws_instance" "df_web" {
   associate_public_ip_address = false
   subnet_id                   = "${aws_subnet.data_feeds.id}"
   private_ip                  = "${var.df_web_ip}"
+  monitoring                  = true
 
   user_data = <<EOF
 #!/bin/bash
@@ -37,6 +38,18 @@ if [ ! -f /bin/aws ]; then
 fi
 
 aws --region eu-west-2 ssm get-parameter --name ef_ssh_logon --query 'Parameter.Value' --output text --with-decryption > /home/wherescape/.ssh/authorized_keys
+
+sudo touch /etc/profile.d/script_envs.sh
+sudo setfacl -m u:wherescape:rwx /etc/profile.d/script_envs.sh
+
+sudo -u wherescape echo "
+export BUCKET_NAME=`aws --region eu-west-2 ssm get-parameter --name DRT_BUCKET_NAME --query 'Parameter.Value' --output text --with-decryption`
+export EF_DB_HOST=`aws --region eu-west-2 ssm get-parameter --name ef_rds_dns_name --query 'Parameter.Value' --output text --with-decryption`
+export DRT_AWS_ACCESS_KEY_ID=`aws --region eu-west-2 ssm get-parameter --name DRT_AWS_ACCESS_KEY_ID --query 'Parameter.Value' --output text --with-decryption`
+export DRT_AWS_SECRET_ACCESS_KEY=`aws --region eu-west-2 ssm get-parameter --name DRT_AWS_SECRET_ACCESS_KEY --query 'Parameter.Value' --output text --with-decryption`
+" > /etc/profile.d/script_envs.sh
+
+su -c "/etc/profile.d/script_envs.sh" - wherescape
 
 EOF
 
