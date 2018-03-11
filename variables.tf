@@ -24,3 +24,7 @@ variable "df_web_ip" {
 variable "key_name" {
   default = "test_instance"
 }
+
+variable "dq_database_cidr_block" {
+  type = "list"
+}

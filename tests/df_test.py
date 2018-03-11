@@ -27,6 +27,7 @@ class TestE2E(unittest.TestCase):
               data_feeds_cidr_block_az2   = "10.1.5.0/24"
               data_pipe_apps_cidr_block   = "1.2.3.0/24"
               peering_cidr_block          = "1.1.1.0/24"
+              dq_database_cidr_block      = ["10.1.1.0/24"]
               az                          = "eu-west-2a"
               az2                         = "eu-west-2b"
               naming_suffix               = "apps-preprod-dq"
