@@ -55,6 +55,17 @@ export DRT_AWS_SECRET_ACCESS_KEY=`aws --region eu-west-2 ssm get-parameter --nam
 
 su -c "/etc/profile.d/script_envs.sh" - wherescape
 
+export DOMAIN_JOIN=`aws --region eu-west-2 ssm get-parameter --name addomainjoin --query 'Parameter.Value' --output text --with-decryption`
+yum -y install sssd realmd krb5-workstation adcli samba-common-tools expect
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+systemctl reload sshd
+chkconfig sssd on
+systemctl start sssd.service
+echo "%Domain\\ Admins@dq.homeoffice.gov.uk ALL=(ALL:ALL) ALL" >>  /etc/sudoers
+expect -c "spawn realm join -U domain.join@dq.homeoffice.gov.uk DQ.HOMEOFFICE.GOV.UK; expect \"*?assword for domain.join@DQ.HOMEOFFICE.GOV.UK:*\"; send -- \"$DOMAIN_JOIN\r\" ; expect eof"
+systemctl restart sssd.service
+reboot
+
 EOF
 
   tags = {

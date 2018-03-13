@@ -38,7 +38,8 @@ resource "aws_iam_role_policy" "data_feeds_linux_iam" {
         "arn:aws:ssm:eu-west-2:*:parameter/EF_DB_USER",
         "arn:aws:ssm:eu-west-2:*:parameter/EF_DB",
         "arn:aws:ssm:eu-west-2:*:parameter/ef_dbuser_password",
-        "arn:aws:ssm:eu-west-2:*:parameter/gpadmin_public_key"
+        "arn:aws:ssm:eu-west-2:*:parameter/gpadmin_public_key",
+        "arn:aws:ssm:eu-west-2:*:parameter/addomainjoin"
       ]
     }
   ]
