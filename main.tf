@@ -71,6 +71,10 @@ EOF
   tags = {
     Name = "python-${local.naming_suffix}"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_security_group" "df_web" {
