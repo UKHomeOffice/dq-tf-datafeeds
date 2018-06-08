@@ -52,6 +52,7 @@ export PGPASSWORD=`aws --region eu-west-2 ssm get-parameter --name ef_dbuser_pas
 export DRT_AWS_ACCESS_KEY_ID=`aws --region eu-west-2 ssm get-parameter --name DRT_AWS_ACCESS_KEY_ID --query 'Parameter.Value' --output text --with-decryption`
 export DRT_AWS_SECRET_ACCESS_KEY=`aws --region eu-west-2 ssm get-parameter --name DRT_AWS_SECRET_ACCESS_KEY --query 'Parameter.Value' --output text --with-decryption`
 export KMS_ID=`aws --region eu-west-2 ssm get-parameter --name DRT_AWS_KMS_KEY_ID --query 'Parameter.Value' --output text --with-decryption`
+export DEBUG=`aws --region eu-west-2 ssm get-parameter --name DRT_AWS_DEBUG --query 'Parameter.Value' --output text --with-decryption`
 " > /etc/profile.d/script_envs.sh
 
 su -c "/etc/profile.d/script_envs.sh" - wherescape
