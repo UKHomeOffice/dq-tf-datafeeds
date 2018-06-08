@@ -76,6 +76,11 @@ EOF
 
   lifecycle {
     prevent_destroy = true
+
+    ignore_changes = [
+      "user_data",
+      "ami",
+    ]
   }
 }
 
