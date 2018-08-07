@@ -21,16 +21,17 @@ class TestE2E(unittest.TestCase):
                 aws = "aws"
               }
 
-              appsvpc_id                  = "1234"
-              opssubnet_cidr_block        = "1.2.3.0/24"
-              data_feeds_cidr_block       = "10.1.4.0/24"
-              data_feeds_cidr_block_az2   = "10.1.5.0/24"
-              data_pipe_apps_cidr_block   = "1.2.3.0/24"
-              peering_cidr_block          = "1.1.1.0/24"
-              dq_database_cidr_block      = ["10.1.1.0/24"]
-              az                          = "eu-west-2a"
-              az2                         = "eu-west-2b"
-              naming_suffix               = "apps-preprod-dq"
+              appsvpc_id                       = "1234"
+              opssubnet_cidr_block             = "1.2.3.0/24"
+              data_feeds_cidr_block            = "10.1.4.0/24"
+              data_feeds_cidr_block_az2        = "10.1.5.0/24"
+              data_pipe_apps_cidr_block        = "1.2.3.0/24"
+              peering_cidr_block               = "1.1.1.0/24"
+              dq_database_cidr_block           = ["10.1.1.0/24"]
+              dq_database_cidr_block_secondary = ["10.1.1.0/24"]
+              az                               = "eu-west-2a"
+              az2                              = "eu-west-2b"
+              naming_suffix                    = "apps-preprod-dq"
             }
         """
         self.result = Runner(self.snippet).result
