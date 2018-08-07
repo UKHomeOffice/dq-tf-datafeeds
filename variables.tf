@@ -28,3 +28,7 @@ variable "key_name" {
 variable "dq_database_cidr_block" {
   type = "list"
 }
+
+variable "dq_database_cidr_block_secondary" {
+  type = "list"
+}
