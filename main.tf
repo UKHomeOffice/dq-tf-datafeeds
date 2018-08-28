@@ -100,7 +100,6 @@ resource "aws_security_group" "df_web" {
       "${var.data_pipe_apps_cidr_block}",
       "${var.opssubnet_cidr_block}",
       "${var.peering_cidr_block}",
-      "${var.dq_database_cidr_block}",
       "${var.dq_database_cidr_block_secondary}",
     ]
   }
