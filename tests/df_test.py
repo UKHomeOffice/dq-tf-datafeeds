@@ -62,5 +62,11 @@ class TestE2E(unittest.TestCase):
     def test_rds_id(self):
         self.assertEqual(self.result['data_feeds']["aws_db_instance.postgres"]["identifier"], "ext-postgres-datafeeds-apps-preprod-dq")
 
+    def test_datafeed_rds_name(self):
+        self.assertEqual(self.result['data_feeds']["aws_db_instance.datafeed_rds"]["tags.Name"], "postgres-datafeeds-apps-preprod-dq")
+
+    def test_datafeed_rds_id(self):
+        self.assertEqual(self.result['data_feeds']["aws_db_instance.datafeed_rds"]["identifier"], "postgres-datafeeds-apps-preprod-dq")
+
 if __name__ == '__main__':
     unittest.main()
