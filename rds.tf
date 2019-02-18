@@ -109,15 +109,17 @@ resource "random_string" "datafeed_username" {
 }
 
 resource "aws_ssm_parameter" "rds_datafeed_username" {
-  name  = "rds_datafeed_username"
-  type  = "SecureString"
-  value = "${random_string.datafeed_username.result}"
+  name        = "rds_datafeed_username"
+  type        = "SecureString"
+  description = "Data feeds RDS admin username"
+  value       = "${random_string.datafeed_username.result}"
 }
 
 resource "aws_ssm_parameter" "rds_datafeed_password" {
-  name  = "rds_datafeed_password"
-  type  = "SecureString"
-  value = "${random_string.datafeed_password.result}"
+  name        = "rds_datafeed_password"
+  type        = "SecureString"
+  description = "Data feeds RDS admin password"
+  value       = "${random_string.datafeed_password.result}"
 }
 
 resource "aws_db_instance" "datafeed_rds" {
