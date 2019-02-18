@@ -28,3 +28,7 @@ variable "key_name" {
 variable "dq_database_cidr_block_secondary" {
   type = "list"
 }
+
+variable "datafeed_rds_db_name" {
+  default = "ef_db"
+}
