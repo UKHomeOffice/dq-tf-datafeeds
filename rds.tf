@@ -127,7 +127,7 @@ resource "aws_db_instance" "datafeed_rds" {
   allocated_storage       = 100
   storage_type            = "gp2"
   engine                  = "postgres"
-  engine_version          = "10.4"
+  engine_version          = "10.6"
   instance_class          = "db.m4.large"
   username                = "${random_string.datafeed_username.result}"
   password                = "${random_string.datafeed_password.result}"
