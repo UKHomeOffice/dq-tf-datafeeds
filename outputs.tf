@@ -21,3 +21,7 @@ output "df_web_ip" {
 output "iam_roles" {
   value = ["${aws_iam_role.data_feeds_linux_iam_role.id}"]
 }
+
+output "rds_address" {
+  value = "${aws_db_instance.datafeed_rds.address}"
+}
