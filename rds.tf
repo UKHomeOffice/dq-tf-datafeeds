@@ -123,21 +123,23 @@ resource "aws_ssm_parameter" "rds_datafeed_password" {
 }
 
 resource "aws_db_instance" "datafeed_rds" {
-  identifier              = "postgres-${local.naming_suffix}"
-  allocated_storage       = 100
-  storage_type            = "gp2"
-  engine                  = "postgres"
-  engine_version          = "10.6"
-  instance_class          = "db.m4.large"
-  username                = "${random_string.datafeed_username.result}"
-  password                = "${random_string.datafeed_password.result}"
-  name                    = "${var.datafeed_rds_db_name}"
-  backup_window           = "00:00-01:00"
-  maintenance_window      = "mon:01:30-mon:02:30"
-  backup_retention_period = 14
-  storage_encrypted       = true
-  multi_az                = true
-  skip_final_snapshot     = true
+  identifier                      = "postgres-${local.naming_suffix}"
+  allocated_storage               = 100
+  storage_type                    = "gp2"
+  engine                          = "postgres"
+  engine_version                  = "10.6"
+  instance_class                  = "db.m4.large"
+  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
+  username                        = "${random_string.datafeed_username.result}"
+  password                        = "${random_string.datafeed_password.result}"
+  name                            = "${var.datafeed_rds_db_name}"
+  backup_window                   = "00:00-01:00"
+  maintenance_window              = "mon:01:30-mon:02:30"
+  backup_retention_period         = 14
+  deletion_protection             = true
+  storage_encrypted               = true
+  multi_az                        = true
+  skip_final_snapshot             = true
 
   db_subnet_group_name   = "${aws_db_subnet_group.rds.id}"
   vpc_security_group_ids = ["${aws_security_group.df_db.id}"]
