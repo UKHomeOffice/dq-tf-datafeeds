@@ -68,5 +68,8 @@ class TestE2E(unittest.TestCase):
     def test_datafeed_rds_id(self):
         self.assertEqual(self.result['data_feeds']["aws_db_instance.datafeed_rds"]["identifier"], "postgres-datafeeds-apps-preprod-dq")
 
+    def test_datafeed_rds_deletion_protection(self):
+        self.assertEqual(self.result['data_feeds']["aws_db_instance.datafeed_rds"]["deletion_protection"], "true")
+
 if __name__ == '__main__':
     unittest.main()
