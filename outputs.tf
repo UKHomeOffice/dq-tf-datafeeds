@@ -25,7 +25,3 @@ output "iam_roles" {
 output "rds_address" {
   value = "${aws_db_instance.datafeed_rds.address}"
 }
-
-output "db_instance_id" {
-	value = "${aws_db_instance.postgres.identifier}"
-}
