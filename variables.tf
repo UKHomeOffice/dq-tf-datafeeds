@@ -19,3 +19,13 @@ variable "route_table_id" {
 variable "datafeed_rds_db_name" {
   default = "ef_db"
 }
+
+variable "dq_lambda_subnet_cidr" {
+  default     = "10.1.42.0/24"
+  description = "Dedicated subnet for Lambda ENIs"
+}
+
+variable "dq_lambda_subnet_cidr_az2" {
+  default     = "10.1.43.0/24"
+  description = "Dedicated subnet for Lambda ENIs"
+}

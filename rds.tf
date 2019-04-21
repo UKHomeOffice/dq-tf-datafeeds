@@ -27,6 +27,8 @@ resource "aws_security_group" "df_db" {
       "${var.opssubnet_cidr_block}",
       "${var.data_feeds_cidr_block}",
       "${var.peering_cidr_block}",
+      "${var.dq_lambda_subnet_cidr}",
+      "${var.dq_lambda_subnet_cidr_az2}",
     ]
   }
 
