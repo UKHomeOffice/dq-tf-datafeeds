@@ -11,33 +11,6 @@ resource "aws_db_subnet_group" "rds" {
   }
 }
 
-resource "aws_subnet" "data_feeds_az2" {
-  vpc_id                  = "${var.appsvpc_id}"
-  cidr_block              = "${var.data_feeds_cidr_block_az2}"
-  map_public_ip_on_launch = false
-  availability_zone       = "${var.az2}"
-
-  tags {
-    Name = "az2-subnet-${local.naming_suffix}"
-  }
-}
-
-resource "aws_route_table_association" "data_feeds_rt_rds" {
-  subnet_id      = "${aws_subnet.data_feeds_az2.id}"
-  route_table_id = "${var.route_table_id}"
-}
-
-resource "random_string" "password" {
-  length  = 16
-  special = false
-}
-
-resource "random_string" "username" {
-  length  = 8
-  special = false
-  number  = false
-}
-
 resource "aws_security_group" "df_db" {
   vpc_id = "${var.appsvpc_id}"
 
@@ -51,7 +24,6 @@ resource "aws_security_group" "df_db" {
     protocol  = "tcp"
 
     cidr_blocks = [
-      "${var.data_pipe_apps_cidr_block}",
       "${var.opssubnet_cidr_block}",
       "${var.data_feeds_cidr_block}",
       "${var.peering_cidr_block}",
@@ -68,34 +40,6 @@ resource "aws_security_group" "df_db" {
     cidr_blocks = [
       "0.0.0.0/0",
     ]
-  }
-}
-
-resource "aws_db_instance" "postgres" {
-  identifier              = "ext-postgres-${local.naming_suffix}"
-  allocated_storage       = 100
-  storage_type            = "gp2"
-  engine                  = "postgres"
-  engine_version          = "9.6.11"
-  instance_class          = "db.m4.large"
-  username                = "${random_string.username.result}"
-  password                = "${random_string.password.result}"
-  backup_window           = "00:00-01:00"
-  maintenance_window      = "mon:01:30-mon:02:30"
-  backup_retention_period = 14
-  storage_encrypted       = true
-  multi_az                = true
-  skip_final_snapshot     = true
-
-  db_subnet_group_name   = "${aws_db_subnet_group.rds.id}"
-  vpc_security_group_ids = ["${aws_security_group.df_db.id}"]
-
-  lifecycle {
-    prevent_destroy = true
-  }
-
-  tags {
-    Name = "ext-postgres-${local.naming_suffix}"
   }
 }
 

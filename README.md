@@ -1,15 +1,13 @@
 # dq-tf-datafeeds
 
-This Terraform module has one private subnet and deploys an EC2 instance representing a web server and an SQL database instance. Allowing inbound TCP traffic on port 135, inbound RDP TCP traffic on port 3389 and SQL TCP traffic on 5432.
+This Terraform module has two private subnets and deploys an PostgreSQL database instance. Allowing inbound TCP traffic on 5432.
 
 
 ## Connectivity
 
 | In/Out        | Type           | Protocol | FromPort| To Port | Description |
 | ------------- |:-------------:| -----:| -----:|-----:| -----:|
-|INBOUND | RDP | TCP |3389 | 3389| Datafeeds Web |
-|INBOUND | RCP | TCP | 135 | 135 | Datafeeds Web |
-|INBOUND | PostgreSQL | TCP | 5432 | 5432 | Datafeeds Postgres ELB |
+|INBOUND | PostgreSQL | TCP | 5432 | 5432 | Datafeeds Postgres RDS |
 
 ## Content overview
 
@@ -19,10 +17,12 @@ It consists of the following core elements:
 
 ### main.tf
 
-This file has the basic components for EC2 instances
-- Private subnet and route table association
-- Two EC2 instances using the connectivity tester module
-- Security group for the SQL and Web server
+This file has the basic components for VPC
+- Private subnets and route table associations
+
+### rds.tf
+
+Deploys an RDS instance, security and database groups.
 
 ### outputs.tf
 
