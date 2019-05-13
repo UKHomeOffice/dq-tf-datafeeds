@@ -9,3 +9,7 @@ output "df_db_sg" {
 output "rds_address" {
   value = "${aws_db_instance.datafeed_rds.address}"
 }
+
+output "data_feeds_cidr_block" {
+  value = "${var.data_feeds_cidr_block}"
+}
