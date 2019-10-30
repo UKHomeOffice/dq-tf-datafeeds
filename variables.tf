@@ -41,3 +41,7 @@ variable "lambda_subnet" {
 variable "lambda_subnet_az2" {
   default = "subnet-04e1ded8159dbc3ee"
 }
+
+variable "rds_enhanced_monitoring_role" {
+  description = "ARN of the RDS enhanced monitoring role"
+}
