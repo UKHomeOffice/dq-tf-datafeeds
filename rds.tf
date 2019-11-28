@@ -80,13 +80,13 @@ resource "aws_db_instance" "datafeed_rds" {
   password                        = "${random_string.datafeed_password.result}"
   name                            = "${var.datafeed_rds_db_name}"
   backup_window                   = "00:00-01:00"
-  maintenance_window              = "tue:09:00-tue:10:00"
+  maintenance_window              = "mon:01:00-mon:02:00"
   backup_retention_period         = 14
   deletion_protection             = true
   storage_encrypted               = true
   multi_az                        = true
   skip_final_snapshot             = true
-  ca_cert_identifier              = "${var.environment == "prod" ? "rds-ca-2015" : "rds-ca-2019"}"
+  ca_cert_identifier              = "${var.environment == "prod" ? "rds-ca-2019" : "rds-ca-2019"}"
 
   monitoring_interval = "60"
   monitoring_role_arn = "${var.rds_enhanced_monitoring_role}"
