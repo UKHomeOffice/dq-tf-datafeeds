@@ -62,5 +62,14 @@ class TestE2E(unittest.TestCase):
     def test_datafeed_rds_deletion_protection(self):
         self.assertEqual(self.result['data_feeds']["aws_db_instance.datafeed_rds"]["deletion_protection"], "true")
 
+    def test_datafeed_rds_ca_cert_identifier(self):
+        self.assertEqual(self.result['data_feeds']["aws_db_instance.datafeed_rds"]["ca_cert_identifier"], "rds-ca-2019")
+
+    def test_datafeed_rds_backup_window(self):
+        self.assertEqual(self.result['data_feeds']["aws_db_instance.datafeed_rds"]["backup_window"], "00:00-01:00")
+
+    def test_datafeed_rds_maintenance_window(self):
+        self.assertEqual(self.result['data_feeds']["aws_db_instance.datafeed_rds"]["maintenance_window"], "mon:01:00-mon:02:00")
+
 if __name__ == '__main__':
     unittest.main()
