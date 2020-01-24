@@ -71,5 +71,11 @@ class TestE2E(unittest.TestCase):
     def test_datafeed_rds_maintenance_window(self):
         self.assertEqual(self.result['data_feeds']["aws_db_instance.datafeed_rds"]["maintenance_window"], "mon:01:00-mon:02:00")
 
+    def test_datafeed_rds_engine_version(self):
+        self.assertEqual(self.result['data_feeds']["aws_db_instance.datafeed_rds"]["engine_version"], "10.6")
+
+    def test_datafeed_rds_apply_immediately(self):
+        self.assertEqual(self.result['data_feeds']["aws_db_instance.datafeed_rds"]["apply_immediately"], "false")
+
 if __name__ == '__main__':
     unittest.main()
