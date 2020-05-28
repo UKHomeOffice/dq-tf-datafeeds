@@ -58,7 +58,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.runner.get_value("module.data_feeds.aws_db_instance.datafeed_rds", "identifier"), "postgres-datafeeds-apps-preprod-dq")
 
     def test_datafeed_rds_deletion_protection(self):
-        self.assertEqual(self.runner.get_value("module.data_feeds.aws_db_instance.datafeed_rds", "deletion_protection"), "true")
+        self.assertEqual(self.runner.get_value("module.data_feeds.aws_db_instance.datafeed_rds", "deletion_protection"), True)
 
     def test_datafeed_rds_ca_cert_identifier(self):
         self.assertEqual(self.runner.get_value("module.data_feeds.aws_db_instance.datafeed_rds", "ca_cert_identifier"), "rds-ca-2019")
@@ -73,7 +73,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.runner.get_value("module.data_feeds.aws_db_instance.datafeed_rds", "engine_version"), "10.10")
 
     def test_datafeed_rds_apply_immediately(self):
-        self.assertEqual(self.runner.get_value("module.data_feeds.aws_db_instance.datafeed_rds", "apply_immediately"), "false")
+        self.assertEqual(self.runner.get_value("module.data_feeds.aws_db_instance.datafeed_rds", "apply_immediately"), False)
 
 if __name__ == '__main__':
     unittest.main()
