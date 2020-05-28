@@ -106,7 +106,7 @@ resource "aws_db_instance" "datafeed_rds" {
 }
 
 module "rds_alarms" {
-  source = "github.com/UKHomeOffice/dq-tf-cloudwatch-rds"
+  source = "git::https://github.com/ukhomeoffice/dq-tf-cloudwatch-rds.git?ref=TF12-upgrade"
 
   naming_suffix                = local.naming_suffix
   environment                  = var.naming_suffix
@@ -116,4 +116,3 @@ module "rds_alarms" {
   read_latency_threshold       = 0.1         # 100 milliseconds
   write_latency_threshold      = 0.35        # 350 milliseconds
 }
-
