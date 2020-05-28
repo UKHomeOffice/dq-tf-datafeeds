@@ -1,10 +1,23 @@
-variable "appsvpc_id" {}
-variable "opssubnet_cidr_block" {}
-variable "data_feeds_cidr_block" {}
-variable "peering_cidr_block" {}
-variable "az" {}
-variable "az2" {}
-variable "data_feeds_cidr_block_az2" {}
+variable "appsvpc_id" {
+}
+
+variable "opssubnet_cidr_block" {
+}
+
+variable "data_feeds_cidr_block" {
+}
+
+variable "peering_cidr_block" {
+}
+
+variable "az" {
+}
+
+variable "az2" {
+}
+
+variable "data_feeds_cidr_block_az2" {
+}
 
 variable "naming_suffix" {
   default     = false
@@ -50,3 +63,4 @@ variable "environment" {
   default     = "notprod"
   description = "Switch between environments"
 }
+
