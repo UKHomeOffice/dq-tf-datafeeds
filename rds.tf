@@ -74,7 +74,7 @@ resource "aws_db_instance" "datafeed_rds" {
   storage_type                    = "gp2"
   engine                          = "postgres"
   engine_version                  = var.environment == "prod" ? "10.10" : "10.10"
-  instance_class                  = var.environment == "prod" ? "db.m4.xlarge" : "db.m4.large" 
+  instance_class                  = var.environment == "prod" ? "db.m4.xlarge" : "db.m4.large"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   username                        = random_string.datafeed_username.result
   password                        = random_string.datafeed_password.result
@@ -84,7 +84,7 @@ resource "aws_db_instance" "datafeed_rds" {
   backup_retention_period         = 14
   deletion_protection             = true
   storage_encrypted               = true
-  multi_az                        = true
+  multi_az                        = var.environment == "prod" ? "true" : "false"
   skip_final_snapshot             = true
   ca_cert_identifier              = var.environment == "prod" ? "rds-ca-2019" : "rds-ca-2019"
   apply_immediately               = var.environment == "prod" ? "false" : "true"
