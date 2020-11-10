@@ -73,7 +73,7 @@ resource "aws_db_instance" "datafeed_rds" {
   allocated_storage               = 100
   storage_type                    = "gp2"
   engine                          = "postgres"
-  engine_version                  = var.environment == "prod" ? "10.10" : "10.10"
+  engine_version                  = var.environment == "prod" ? "10.13" : "10.13"
   instance_class                  = var.environment == "prod" ? "db.m4.xlarge" : "db.m4.large"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   username                        = random_string.datafeed_username.result
