@@ -51,7 +51,7 @@ resource "random_string" "datafeed_password" {
 resource "random_string" "datafeed_username" {
   length  = 8
   special = false
-  number  = false
+  numeric  = false
 }
 
 resource "aws_ssm_parameter" "rds_datafeed_username" {
@@ -109,7 +109,7 @@ resource "aws_db_instance" "datafeed_rds" {
 }
 
 module "rds_alarms" {
-  source = "github.com/UKHomeOffice/dq-tf-cloudwatch-rds"
+  source = "github.com/UKHomeOffice/dq-tf-cloudwatch-rds?ref=yel-8750-migrate-tf-version"
 
   naming_suffix                = local.naming_suffix
   environment                  = var.naming_suffix
