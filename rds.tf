@@ -51,7 +51,7 @@ resource "random_string" "datafeed_password" {
 resource "random_string" "datafeed_username" {
   length  = 8
   special = false
-  numeric  = false
+  numeric = false
 }
 
 resource "aws_ssm_parameter" "rds_datafeed_username" {
