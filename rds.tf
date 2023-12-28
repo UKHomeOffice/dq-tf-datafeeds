@@ -109,7 +109,7 @@ resource "aws_db_instance" "datafeed_rds" {
 }
 
 module "rds_alarms" {
-  source = "github.com/UKHomeOffice/dq-tf-cloudwatch-rds?ref=yel-8750-migrate-tf-version"
+  source = "github.com/UKHomeOffice/dq-tf-cloudwatch-rds"
 
   naming_suffix                = local.naming_suffix
   environment                  = var.naming_suffix
