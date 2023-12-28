@@ -114,7 +114,7 @@ module "rds_alarms" {
   naming_suffix                = local.naming_suffix
   environment                  = var.naming_suffix
   pipeline_name                = "DRT-data-feed"
-  db_instance_id               = aws_db_instance.datafeed_rds.id
+  db_instance_id               = aws_db_instance.datafeed_rds.identifier
   free_storage_space_threshold = 30000000000 # 30GB free space
   read_latency_threshold       = 0.1         # 100 milliseconds
   write_latency_threshold      = 0.35        # 350 milliseconds
