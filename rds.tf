@@ -51,7 +51,7 @@ resource "random_string" "datafeed_password" {
 resource "random_string" "datafeed_username" {
   length  = 8
   special = false
-  number  = false
+  numeric = false
 }
 
 resource "aws_ssm_parameter" "rds_datafeed_username" {
@@ -78,7 +78,7 @@ resource "aws_db_instance" "datafeed_rds" {
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   username                        = random_string.datafeed_username.result
   password                        = random_string.datafeed_password.result
-  name                            = var.datafeed_rds_db_name
+  db_name                         = var.datafeed_rds_db_name
   backup_window                   = var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"
   maintenance_window              = var.environment == "prod" ? "mon:01:00-mon:02:00" : "mon:08:00-mon:09:00"
   backup_retention_period         = 14
@@ -114,7 +114,7 @@ module "rds_alarms" {
   naming_suffix                = local.naming_suffix
   environment                  = var.naming_suffix
   pipeline_name                = "DRT-data-feed"
-  db_instance_id               = aws_db_instance.datafeed_rds.id
+  db_instance_id               = aws_db_instance.datafeed_rds.identifier
   free_storage_space_threshold = 30000000000 # 30GB free space
   read_latency_threshold       = 0.1         # 100 milliseconds
   write_latency_threshold      = 0.35        # 350 milliseconds
