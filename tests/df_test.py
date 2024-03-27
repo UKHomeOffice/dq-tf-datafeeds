@@ -60,7 +60,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.runner.get_value("module.data_feeds.aws_db_instance.datafeed_rds", "deletion_protection"), True)
 
     def test_datafeed_rds_ca_cert_identifier(self):
-        self.assertEqual(self.runner.get_value("module.data_feeds.aws_db_instance.datafeed_rds", "ca_cert_identifier"), "rds-ca-2019")
+        self.assertEqual(self.runner.get_value("module.data_feeds.aws_db_instance.datafeed_rds", "ca_cert_identifier"), "rds-ca-rsa2048-g1")
 
     def test_datafeed_rds_backup_window(self):
         self.assertEqual(self.runner.get_value("module.data_feeds.aws_db_instance.datafeed_rds", "backup_window"), "00:00-01:00")
