@@ -73,7 +73,7 @@ resource "aws_db_instance" "datafeed_rds" {
   allocated_storage               = 100
   storage_type                    = "gp2"
   engine                          = "postgres"
-  engine_version                  = var.environment == "prod" ? "14.7" : "14.7"
+  engine_version                  = var.environment == "prod" ? "14.20" : "14.20"
   instance_class                  = var.environment == "prod" ? "db.m5.xlarge" : "db.m5.large"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   username                        = random_string.datafeed_username.result
@@ -87,7 +87,7 @@ resource "aws_db_instance" "datafeed_rds" {
   multi_az                        = var.environment == "prod" ? "true" : "false"
   skip_final_snapshot             = true
   ca_cert_identifier              = var.environment == "prod" ? "rds-ca-rsa2048-g1" : "rds-ca-rsa2048-g1"
-  apply_immediately               = var.environment == "prod" ? "false" : "true"
+  apply_immediately               = var.environment == "prod" ? "false" : "false"
   monitoring_interval             = "60"
   monitoring_role_arn             = var.rds_enhanced_monitoring_role
   db_subnet_group_name            = aws_db_subnet_group.rds.id
@@ -96,11 +96,30 @@ resource "aws_db_instance" "datafeed_rds" {
   performance_insights_enabled          = true
   performance_insights_retention_period = "7"
 
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      engine_version,
-    ]
+  #lifecycle {
+  #  prevent_destroy = true
+  #  ignore_changes = [
+  #    engine_version,
+  #    identifier,
+  #    id,
+  #    tags,
+  #  ]
+  #}
+
+  # ─────────────────────────────────────────────────────────────
+  # ZERO-DOWNTIME BLUE/GREEN DEPLOYMENT (AWS RECOMMENDED)
+  # ─────────────────────────────────────────────────────────────
+  blue_green_update {
+    enabled = true
+  }
+
+  # ─────────────────────────────────────────────────────────────
+  # TIMEOUTS - VERY IMPORTANT FOR BLUE/GREEN UPGRADES
+  # ─────────────────────────────────────────────────────────────
+  timeouts {
+    create = "4h"
+    update = "4h" # Critical - Blue/Green engine upgrades take time
+    delete = "4h"
   }
 
   tags = {
