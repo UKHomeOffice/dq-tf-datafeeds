@@ -100,6 +100,9 @@ resource "aws_db_instance" "datafeed_rds" {
   #  prevent_destroy = true
   #  ignore_changes = [
   #    engine_version,
+  #    identifier,
+  #    id,
+  #    tags,
   #  ]
   #}
 
@@ -108,6 +111,15 @@ resource "aws_db_instance" "datafeed_rds" {
   # ─────────────────────────────────────────────────────────────
   blue_green_update {
     enabled = true
+  }
+
+  # ─────────────────────────────────────────────────────────────
+  # TIMEOUTS - VERY IMPORTANT FOR BLUE/GREEN UPGRADES
+  # ─────────────────────────────────────────────────────────────
+  timeouts {
+    create = "4h"
+    update = "4h" # Critical - Blue/Green engine upgrades take time
+    delete = "4h"
   }
 
   tags = {
