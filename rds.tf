@@ -96,31 +96,31 @@ resource "aws_db_instance" "datafeed_rds" {
   performance_insights_enabled          = true
   performance_insights_retention_period = "7"
 
-  #lifecycle {
-  #  prevent_destroy = true
-  #  ignore_changes = [
-  #    engine_version,
-  #    identifier,
-  #    id,
-  #    tags,
-  #  ]
-  #}
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes = [
+      engine_version,
+      identifier,
+      id,
+      tags,
+    ]
+  }
 
   # ─────────────────────────────────────────────────────────────
   # ZERO-DOWNTIME BLUE/GREEN DEPLOYMENT (AWS RECOMMENDED)
   # ─────────────────────────────────────────────────────────────
-  blue_green_update {
-    enabled = true
-  }
+  #blue_green_update {
+  #  enabled = true
+  #}
 
   # ─────────────────────────────────────────────────────────────
   # TIMEOUTS - VERY IMPORTANT FOR BLUE/GREEN UPGRADES
   # ─────────────────────────────────────────────────────────────
-  timeouts {
-    create = "4h"
-    update = "4h" # Critical - Blue/Green engine upgrades take time
-    delete = "4h"
-  }
+  #timeouts {
+  #  create = "4h"
+  #  update = "4h" # Critical - Blue/Green engine upgrades take time
+  #  delete = "4h"
+  #}
 
   tags = {
     Name = "postgres-${local.naming_suffix}"
