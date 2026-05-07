@@ -73,7 +73,7 @@ resource "aws_db_instance" "datafeed_rds" {
   allocated_storage               = 100
   storage_type                    = "gp2"
   engine                          = "postgres"
-  engine_version                  = var.environment == "prod" ? "14.20" : "14.20"
+  engine_version                  = var.environment == "prod" ? "14.22" : "14.22"
   instance_class                  = var.environment == "prod" ? "db.m5.xlarge" : "db.m5.large"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   username                        = random_string.datafeed_username.result
@@ -99,7 +99,7 @@ resource "aws_db_instance" "datafeed_rds" {
   lifecycle {
     prevent_destroy = true
     ignore_changes = [
-      engine_version,
+      #engine_version,
       identifier,
       id,
       tags,
