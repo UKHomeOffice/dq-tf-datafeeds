@@ -99,10 +99,10 @@ resource "aws_db_instance" "datafeed_rds" {
   lifecycle {
     prevent_destroy = true
     ignore_changes = [
-      engine_version,
-      identifier,
-      id,
-      tags,
+      #engine_version,
+      #identifier,
+      #id,
+      #tags,
     ]
   }
 
