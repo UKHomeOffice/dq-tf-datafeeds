@@ -71,7 +71,7 @@ resource "aws_ssm_parameter" "rds_datafeed_password" {
 resource "aws_db_instance" "datafeed_rds" {
   identifier                      = "postgres-${local.naming_suffix}"
   allocated_storage               = 100
-  storage_type                    = "gp2"
+  storage_type                    = "gp3"
   engine                          = "postgres"
   engine_version                  = var.environment == "prod" ? "14.22" : "14.22"
   instance_class                  = var.environment == "prod" ? "db.m5.xlarge" : "db.m5.large"
