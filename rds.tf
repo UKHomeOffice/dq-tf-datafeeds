@@ -100,6 +100,7 @@ resource "aws_db_instance" "datafeed_rds" {
     prevent_destroy = true
     ignore_changes = [
       #engine_version,
+      storage_type,
       #identifier,
       #id,
       #tags,
